@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jibuy — Clothing, Wine & Beads for the Culture</title>
+<meta name="description" content="Jibuy — Nigeria's one-page marketplace for clothing, wine and bead accessories.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+<div id="toast-region" class="toast-region" aria-live="polite" aria-atomic="true"></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="#/shop" class="logo">Jibuy</a>
+
+    <form class="search-form" role="search" id="search-form">
+      <label for="search-input" class="visually-hidden">Search products</label>
+      <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" id="search-input" placeholder="Search clothing, wine, beads…" autocomplete="off">
+    </form>
+
+    <nav class="header-actions" aria-label="Account actions">
+      <button type="button" id="theme-toggle" class="icon-btn" aria-pressed="false" aria-label="Switch to light mode">
+        <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/></svg>
+      </button>
+      <a href="#/wishlist" class="icon-btn" aria-label="Wishlist, 0 items" id="wishlist-link">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-10-9.3C.5 8 2 4.5 5.6 4 8 3.7 10 5 12 7.3 14 5 16 3.7 18.4 4 22 4.5 23.5 8 22 11.7 19.5 16.4 12 21 12 21Z"/></svg>
+        <span class="badge" id="wishlist-count">0</span>
+      </a>
+      <button type="button" id="cart-open-btn" class="icon-btn" aria-haspopup="dialog" aria-controls="cart-drawer" aria-label="Cart, 0 items">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2.5 3h2.2l2.4 12.2a2 2 0 0 0 2 1.6h8a2 2 0 0 0 2-1.6L21 7H6"/></svg>
+        <span class="badge" id="cart-count">0</span>
+      </button>
+    </nav>
+  </div>
+
+  <nav class="category-nav" aria-label="Categories" id="category-nav">
+    <button type="button" class="chip is-active" data-category="all">All</button>
+    <button type="button" class="chip" data-category="clothing">Clothing</button>
+    <button type="button" class="chip" data-category="wine">Wine</button>
+    <button type="button" class="chip" data-category="beads">Beads &amp; Accessories</button>
+  </nav>
+</header>
+
+<main id="main-content">
+
+  <!-- SHOP VIEW -->
+  <section id="view-shop" class="view">
+    <div class="hero">
+      <p class="hero-eyebrow">Lagos · Abuja · everywhere naija</p>
+      <h1>Dress loud. Sip slow. Bead it your way.</h1>
+      <p class="hero-sub">Clothing, wine and bead accessories picked for the culture — delivered nationwide.</p>
+    </div>
+
+    <div class="toolbar">
+      <button type="button" id="filter-toggle-btn" class="btn btn-outline" aria-expanded="false" aria-controls="filter-panel">
+        Filters
+      </button>
+      <div class="sort-group">
+        <label for="sort-select">Sort by</label>
+        <select id="sort-select">
+          <option value="featured">Featured</option>
+          <option value="price-asc">Price: Low to High</option>
+          <option value="price-desc">Price: High to Low</option>
+          <option value="rating">Top Rated</option>
+          <option value="newest">Newest</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="filter-panel" class="filter-panel" hidden>
+      <div class="filter-row">
+        <label for="price-min">Min price (₦)</label>
+        <input type="number" id="price-min" min="0" step="500" placeholder="0">
+      </div>
+      <div class="filter-row">
+        <label for="price-max">Max price (₦)</label>
+        <input type="number" id="price-max" min="0" step="500" placeholder="Any">
+      </div>
+      <button type="button" id="clear-filters-btn" class="btn btn-text">Clear all filters</button>
+    </div>
+
+    <p id="results-count" class="results-count" aria-live="polite"></p>
+    <div id="product-grid" class="product-grid" aria-live="polite"></div>
+  </section>
+
+  <!-- PRODUCT DETAIL VIEW -->
+  <section id="view-product" class="view" hidden>
+    <button type="button" id="back-to-shop-btn" class="btn btn-text back-btn">← Back to shop</button>
+    <div id="product-detail-content"></div>
+  </section>
+
+  <!-- WISHLIST VIEW -->
+  <section id="view-wishlist" class="view" hidden>
+    <h1>Your wishlist</h1>
+    <div id="wishlist-grid" class="product-grid"></div>
+  </section>
+
+  <!-- CHECKOUT VIEW -->
+  <section id="view-checkout" class="view" hidden>
+    <h1>Checkout</h1>
+    <div class="checkout-layout">
+      <form id="checkout-form" novalidate>
+        <fieldset>
+          <legend>Contact</legend>
+          <div class="field">
+            <label for="cf-name">Full name</label>
+            <input type="text" id="cf-name" name="name" required autocomplete="name">
+            <p class="field-error" id="err-name" role="alert"></p>
+          </div>
+          <div class="field">
+            <label for="cf-email">Email</label>
+            <input type="email" id="cf-email" name="email" required autocomplete="email">
+            <p class="field-error" id="err-email" role="alert"></p>
+          </div>
+          <div class="field">
+            <label for="cf-phone">Phone number</label>
+            <input type="tel" id="cf-phone" name="phone" placeholder="+234 803 000 0000" required autocomplete="tel">
+            <p class="field-error" id="err-phone" role="alert"></p>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Delivery address</legend>
+          <div class="field">
+            <label for="cf-address">Street address</label>
+            <input type="text" id="cf-address" name="address" required autocomplete="street-address">
+            <p class="field-error" id="err-address" role="alert"></p>
+          </div>
+          <div class="field">
+            <label for="cf-city">City</label>
+            <input type="text" id="cf-city" name="city" required autocomplete="address-level2">
+            <p class="field-error" id="err-city" role="alert"></p>
+          </div>
+          <div class="field">
+            <label for="cf-state">State</label>
+            <select id="cf-state" name="state" required>
+              <option value="Lagos">Lagos</option>
+              <option value="Abuja">Abuja (FCT)</option>
+              <option value="Other">Other state</option>
+            </select>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Payment method</legend>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="payment" value="card" checked><span>Pay with card</span></label>
+            <label class="radio-option"><input type="radio" name="payment" value="transfer"><span>Bank transfer</span></label>
+            <label class="radio-option"><input type="radio" name="payment" value="delivery"><span>Pay on delivery</span></label>
+          </div>
+        </fieldset>
+
+        <button type="submit" class="btn btn-primary btn-block">Place order</button>
+      </form>
+
+      <aside class="order-summary" aria-label="Order summary">
+        <h2>Order summary</h2>
+        <div id="checkout-items"></div>
+        <dl class="cart-totals">
+          <div><dt>Subtotal</dt><dd id="co-subtotal">₦0</dd></div>
+          <div><dt>Discount</dt><dd id="co-discount">₦0</dd></div>
+          <div><dt>Delivery</dt><dd id="co-delivery">₦0</dd></div>
+          <div class="total"><dt>Total</dt><dd id="co-total">₦0</dd></div>
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+  <!-- CONFIRMATION VIEW -->
+  <section id="view-confirmation" class="view" hidden>
+    <div id="confirmation-content" class="confirmation"></div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p>© 2026 Jibuy. Simulated store for demonstration — no real payments are processed.</p>
+</footer>
+
+<!-- CART DRAWER -->
+<div id="cart-overlay" class="drawer-overlay" hidden></div>
+<aside id="cart-drawer" class="cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cart-drawer-title" hidden>
+  <div class="drawer-header">
+    <h2 id="cart-drawer-title">Your cart</h2>
+    <button type="button" id="cart-close-btn" class="icon-btn" aria-label="Close cart">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="4" y1="4" x2="20" y2="20"/><line x1="20" y1="4" x2="4" y2="20"/></svg>
+    </button>
+  </div>
+
+  <div id="cart-items" class="cart-items"></div>
+
+  <div class="cart-footer">
+    <div class="field">
+      <label for="delivery-state-select">Deliver to</label>
+      <select id="delivery-state-select">
+        <option value="Lagos">Lagos — ₦1,500</option>
+        <option value="Abuja">Abuja (FCT) — ₦2,500</option>
+        <option value="Other">Other state — ₦3,500</option>
+      </select>
+    </div>
+    <div class="coupon-row">
+      <label for="coupon-input" class="visually-hidden">Coupon code</label>
+      <input type="text" id="coupon-input" placeholder="Coupon code">
+      <button type="button" id="apply-coupon-btn" class="btn btn-outline">Apply</button>
+    </div>
+    <p id="coupon-message" class="coupon-message" aria-live="polite"></p>
+
+    <dl class="cart-totals">
+      <div><dt>Subtotal</dt><dd id="cart-subtotal">₦0</dd></div>
+      <div><dt>Discount</dt><dd id="cart-discount">₦0</dd></div>
+      <div><dt>Delivery</dt><dd id="cart-delivery">₦0</dd></div>
+      <div class="total"><dt>Total</dt><dd id="cart-total">₦0</dd></div>
+    </dl>
+    <a href="#/checkout" id="checkout-btn" class="btn btn-primary btn-block">Checkout</a>
+  </div>
+</aside>
+
+<script src="app.js"></script>
+</body>
+</html>
