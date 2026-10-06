@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Jibuy — Gym, Tech &amp; Sports Gear in Nigeria</title>
+  <meta name="description" content="Shop gym accessories, tech, gadgets and sports gear in Naira. Fast delivery across Nigeria, secure checkout, new deals daily.">
+  <meta name="theme-color" content="#2e1065">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://accounts.google.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: https:; frame-src https://accounts.google.com; connect-src 'self' https: http://localhost:* http://127.0.0.1:*; base-uri 'self'; form-action 'self'; object-src 'none'">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%F0%9F%9B%8D%EF%B8%8F%3C/text%3E%3C/svg%3E">
+  <script src="config.js"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="container bar">
+      <a class="brand" href="#/" aria-label="Jibuy home">
+        <span class="brand-mark" aria-hidden="true">J</span><span class="brand-name">Jibuy</span>
+      </a>
+
+      <form class="search" id="search-form" role="search">
+        <label class="sr-only" for="search-input">Search products</label>
+        <input id="search-input" type="search" placeholder="Search earbuds, dumbbells, football…" autocomplete="off" enterkeyhint="search" maxlength="80">
+        <button type="submit" class="search-btn" aria-label="Search"><span aria-hidden="true">🔍</span></button>
+      </form>
+
+      <div class="actions">
+        <button id="theme-toggle" class="icon-btn" type="button" aria-pressed="false" aria-label="Dark mode"><span aria-hidden="true">🌙</span></button>
+        <a class="icon-btn" href="#/wishlist" aria-label="Wishlist"><span aria-hidden="true">♡</span><span class="badge" id="wish-count">0</span></a>
+        <div id="account-slot"></div>
+        <button id="cart-btn" class="icon-btn" type="button" aria-label="Open cart, 0 items"><span aria-hidden="true">🛒</span><span class="badge" id="cart-count">0</span></button>
+      </div>
+    </div>
+    <nav class="container cat-strip" id="cat-strip" aria-label="Categories"></nav>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <!-- Home / listing -->
+    <section data-view="home" aria-label="Shop">
+      <div class="container">
+        <section class="hero" aria-labelledby="hero-title">
+          <h1 id="hero-title">Gear up for the grind, the game and the gram.</h1>
+          <p>Gym essentials, tech, gadgets and sports kit, delivered to your door anywhere in Nigeria.</p>
+          <ul class="perks">
+            <li>🚚 <span id="perk-free">Free delivery on big orders</span></li>
+            <li>🎟️ Code <strong>JIBUY10</strong> takes 10% off</li>
+            <li>🔒 Secure checkout</li>
+          </ul>
+        </section>
+
+        <div class="layout">
+          <div class="filters-wrap">
+            <button id="filter-toggle" class="btn btn-ghost" type="button" aria-expanded="false" aria-controls="filters"><span aria-hidden="true">☰</span> Filters</button>
+            <aside class="filters" id="filters" aria-labelledby="filters-h">
+              <h2 id="filters-h" class="filters-title">Filters</h2>
+              <form id="filter-form" novalidate>
+                <fieldset>
+                  <legend>Price range (₦)</legend>
+                  <div class="price-row">
+                    <div class="field"><label for="min-price">Min</label><input id="min-price" type="number" min="0" step="500" inputmode="numeric" placeholder="0"></div>
+                    <div class="field"><label for="max-price">Max</label><input id="max-price" type="number" min="0" step="500" inputmode="numeric" placeholder="Any"></div>
+                  </div>
+                  <p class="error" id="price-err" hidden></p>
+                  <div class="presets" role="group" aria-label="Quick price ranges">
+                    <button type="button" class="chip" data-min="0" data-max="10000">Under ₦10k</button>
+                    <button type="button" class="chip" data-min="10000" data-max="30000">₦10k–30k</button>
+                    <button type="button" class="chip" data-min="30000" data-max="100000">₦30k–100k</button>
+                    <button type="button" class="chip" data-min="100000" data-max="">Over ₦100k</button>
+                  </div>
+                </fieldset>
+                <div class="check"><input type="checkbox" id="in-stock"><label for="in-stock">In stock only</label></div>
+                <button type="button" id="clear-filters" class="btn btn-ghost btn-sm">Clear all filters</button>
+              </form>
+            </aside>
+          </div>
+
+          <section aria-labelledby="results-title" class="results">
+            <div class="toolbar">
+              <div>
+                <h2 id="results-title">All products</h2>
+                <p id="result-count" class="muted" aria-live="polite"></p>
+              </div>
+              <div class="sort">
+                <label for="sort">Sort by</label>
+                <select id="sort">
+                  <option value="featured">Featured</option>
+                  <option value="newest">Newest</option>
+                  <option value="price-asc">Price: low to high</option>
+                  <option value="price-desc">Price: high to low</option>
+                  <option value="rating">Top rated</option>
+                  <option value="name">Name A–Z</option>
+                </select>
+              </div>
+            </div>
+            <div id="active-filters" class="chips"></div>
+            <ul id="grid" class="grid" aria-busy="true"></ul>
+            <div id="empty" hidden></div>
+            <div class="more"><button id="more-btn" class="btn btn-outline" type="button" hidden>Show more</button></div>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <!-- Product detail -->
+    <section data-view="product" hidden aria-label="Product"><div class="container" id="product-root"></div></section>
+
+    <!-- Wishlist -->
+    <section data-view="wishlist" hidden aria-labelledby="wish-title">
+      <div class="container"><h1 id="wish-title" class="page-title">Your wishlist</h1><div id="wish-root"></div></div>
+    </section>
+
+    <!-- Orders -->
+    <section data-view="orders" hidden aria-labelledby="orders-title">
+      <div class="container"><h1 id="orders-title" class="page-title">Your orders</h1><div id="orders-root"></div></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container foot">
+      <p><strong>Jibuy</strong> — gym, tech, gadgets and sports gear. Questions? Call <a id="support-phone" href="tel:+2348000000000">+234 800 000 0000</a>.</p>
+      <p class="muted">Payments on this demo are simulated. <a href="admin.html">Store admin</a></p>
+    </div>
+  </footer>
+
+  <!-- Cart drawer -->
+  <dialog id="cart-dialog" class="drawer" aria-labelledby="cart-title">
+    <div class="dlg-head"><h2 id="cart-title">Your cart</h2><button class="icon-btn" type="button" data-close aria-label="Close cart"><span aria-hidden="true">✕</span></button></div>
+    <div class="dlg-body" id="cart-body"></div>
+    <div class="dlg-foot" id="cart-foot"></div>
+  </dialog>
+
+  <!-- Checkout (can be expanded to full screen) -->
+  <dialog id="checkout-dialog" class="modal" aria-labelledby="checkout-title">
+    <div class="dlg-head">
+      <h2 id="checkout-title">Checkout</h2>
+      <div class="head-actions">
+        <button id="expand-btn" class="btn btn-ghost btn-sm" type="button"><span aria-hidden="true">⤢</span> <span>Expand</span></button>
+        <button class="icon-btn" type="button" data-close aria-label="Close checkout"><span aria-hidden="true">✕</span></button>
+      </div>
+    </div>
+    <div class="dlg-body" id="checkout-body"></div>
+  </dialog>
+
+  <!-- Sign in / create account -->
+  <dialog id="auth-dialog" class="modal small" aria-labelledby="auth-title">
+    <div class="dlg-head"><h2 id="auth-title">Sign in</h2><button class="icon-btn" type="button" data-close aria-label="Close sign in"><span aria-hidden="true">✕</span></button></div>
+    <div class="dlg-body" id="auth-body"></div>
+  </dialog>
+
+  <div id="toasts" class="toasts" role="status" aria-live="polite"></div>
+
+  <script src="products-data.js" defer></script>
+  <script src="storage.js" defer></script>
+  <script src="app.js" defer></script>
+</body>
+</html>
